@@ -1,5 +1,7 @@
 <template>
-  <main id="main"></main>
+  <main id="main">
+    <slot></slot>
+  </main>
 </template>
 
 <script>

@@ -1,9 +1,17 @@
 <template>
-  <b-navbar id="bottombar" v-resize="resize"></b-navbar>
+  <nav id="bottombar" :class="bottombarType" v-resize="resize">
+    <slot></slot>
+  </nav>
 </template>
 
 <script>
 export default {
+  props: {
+    bottombarType: {
+      type: String,
+      default: 'has-background-black',
+    },
+  },
   mounted() {
     //
   },

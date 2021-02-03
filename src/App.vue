@@ -1,8 +1,6 @@
 <template>
   <div id="app" v-w-orientation="orientation" v-w-resize="resize">
-    <Topbar>
-      <router-view name="topbar"/>
-    </Topbar>
+    <router-view name="topbar"/>
     <Main>
       <router-view />
     </Main>
@@ -12,13 +10,11 @@
   </div>
 </template>
 <script>
-import Topbar from '@/components/topbar.vue';
 import Main from '@/components/main.vue';
 import Bottombar from '@/components/bottombar.vue';
 
 export default {
   components: {
-    Topbar,
     Main,
     Bottombar,
   },
