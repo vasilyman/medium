@@ -1,6 +1,6 @@
 <template>
-  <Bottombar>
-    <div class="level">
+  <Bottombar bottombarType="has-background-white" class="shadow-top">
+    <div class="level is-mobile">
       <div
         v-for="(item, i) in menu"
         :key="i"
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     clap() {
-      console.log('clap');
+      this.$root.$emit('clap');
     },
     share() {
       //

@@ -1,5 +1,5 @@
 <template>
-  <main id="main">
+  <main id="main" class="is-flex is-flex-direction-column">
     <slot></slot>
   </main>
 </template>

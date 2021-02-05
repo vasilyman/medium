@@ -1,9 +1,9 @@
 <template>
-  <Topbar :dark="true">
+  <Topbar :dark="true" :title="title">
     <template #left>
       <b-button type="is-link" @click.prevent="$router.back()" icon-left="chevron-left" />
     </template>
-    <template #center>
+    <template v-if="!title" #center>
       Article
     </template>
   </Topbar>
@@ -12,6 +12,9 @@
 import Topbar from '@/components/topbar.vue';
 
 export default {
+  props: {
+    title: String,
+  },
   components: {
     Topbar,
   },

@@ -1,7 +1,7 @@
 <template>
   <Topbar title="Bookmarks">
     <template #append>
-      <div class="level h-full px-3">
+      <div class="level is-mobile h-full px-3 has-background-white">
         <div class="level-left">
           <div class="level-item" v-for="(item, i) in groups" :key="i">
             <router-link :to="item.to">

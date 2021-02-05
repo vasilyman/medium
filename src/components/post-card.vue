@@ -8,51 +8,46 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <b>{{title}}</b>
+          <router-link :to="{ name: 'article', params: { id, userId } }">
+            <b>{{title}}</b>
+          </router-link>
           <br>
           <small>{{author}}</small> <small>{{created}}</small>
           <br>
           {{description}}
         </p>
       </div>
-      <nav class="level is-mobile">
-        <div class="level-left">
-          <b-button
-            type="is-primary"
-            rounded
-            icon-right="sign-language"
-          >{{claps}}</b-button>
-        </div>
-        <div class="level-right">
-          <div class="level-item">
-            <b-button
-              type="is-danger"
-              rounded
-              icon-right="trash"
-            >Удалить</b-button>
-          </div>
-          <div class="level-item">
-            <b-button
-              type="is-info"
-              rounded
-              icon-right="edit"
-            >Редактировать</b-button>
-          </div>
-        </div>
-      </nav>
+      <PostActions
+        :id="id"
+        :userId="userId"
+        :claps="claps"
+        @clap="clap"
+        @del="del"
+      />
     </div>
   </article>
 </template>
 <script>
+import { mapState } from 'vuex';
+import PostActions from '@/components/post-actions.vue';
+
 export default {
   props: {
+    id: Number,
     title: String,
     description: String,
     createdAt: String,
-    claps: String,
+    claps: Number,
     image: String,
+    userId: Number,
+  },
+  components: {
+    PostActions,
   },
   computed: {
+    ...mapState({
+      me: (state) => state.user.me,
+    }),
     created() {
       return this.$moment(this.createdAt).fromNow();
     },
@@ -64,14 +59,19 @@ export default {
     },
   },
   methods: {
-    edit() {
-      //
-    },
     del() {
-      //
+      this.$store.dispatch('post/deletePost', this.id)
+        .then(() => {
+          this.$buefy.toast.open({
+            message: `Post ${this.id} deleted!`,
+            type: 'is-success',
+          });
+          this.$store.dispatch('post/getPosts');
+        });
     },
     clap() {
-      //
+      this.$store.dispatch('post/clapPost', this.id)
+        .then(() => this.$store.dispatch('post/getPosts'));
     },
   },
 };

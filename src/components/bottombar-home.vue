@@ -1,6 +1,6 @@
 <template>
   <Bottombar>
-    <div class="level">
+    <div class="level is-mobile">
       <router-link
         v-for="(item, i) in menu"
         :key="i"
@@ -19,33 +19,46 @@
 
 <script>
 import Bottombar from '@/components/bottombar.vue';
+import { mapState } from 'vuex';
 
 export default {
   components: {
     Bottombar,
   },
-  data() {
-    return {
-      menu: [
+  computed: {
+    ...mapState({
+      me: (state) => state.user.me,
+    }),
+    menu() {
+      let menu = [
         {
           icon: 'home',
           to: '/',
           exact: true,
+          name: 'index',
         },
         {
           icon: 'bookmark',
           to: '/bookmarks',
+          name: 'bookmark',
         },
         {
           icon: 'file-medical',
           to: '/new',
+          name: 'new',
         },
         {
           icon: 'user',
           to: '/profile',
+          name: 'profile',
         },
-      ],
-    };
+      ];
+      // filter for unauth users
+      if (!this.me.id) menu = menu.filter((m) => !['bookmark', 'new'].includes(m.name));
+      // filter for not writer users
+      if (this.me.role !== 'writer') menu = menu.filter((m) => m.name !== 'new');
+      return menu;
+    },
   },
 };
 </script>

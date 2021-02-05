@@ -2,7 +2,9 @@
   <div id="app" v-w-orientation="orientation" v-w-resize="resize">
     <router-view name="topbar"/>
     <Main>
-      <router-view />
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
     </Main>
     <Bottombar>
       <router-view name="bottombar"/>
@@ -12,14 +14,25 @@
 <script>
 import Main from '@/components/main.vue';
 import Bottombar from '@/components/bottombar.vue';
+import { users, posts } from '@/db.json';
 
 export default {
   components: {
     Main,
     Bottombar,
   },
+  data() {
+    return {
+      bp: {},
+    };
+  },
   mounted() {
     this.setVHeight();
+    this.calcBp();
+
+    // set posts to localstorage from db file
+    localStorage.setItem('posts', JSON.stringify(posts));
+    localStorage.setItem('users', JSON.stringify(users));
   },
   methods: {
     orientation() {
@@ -27,9 +40,13 @@ export default {
     },
     resize() {
       this.setVHeight();
+      this.calcBp();
     },
     setVHeight() {
       document.documentElement.style.setProperty('--v-height', `${window.innerHeight}px`);
+    },
+    calcBp() {
+      this.$store.dispatch('calcBp');
     },
   },
 };
@@ -38,6 +55,5 @@ export default {
   #app {
     position: relative;
     height: var(--v-height);
-    overflow: hidden;
   }
 </style>

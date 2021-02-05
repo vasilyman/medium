@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment';
+import Vuelidate from 'vuelidate';
 import {
   wScroll,
   wResize,
@@ -30,6 +31,7 @@ Vue.use(Buefy, {
   defaultIconComponent: 'vue-fontawesome',
   defaultIconPack: 'fas',
 });
+Vue.use(Vuelidate);
 
 // directives
 Vue.directive('w-scroll', wScroll);

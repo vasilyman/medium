@@ -1,31 +1,24 @@
 export default {
-  computed: {
-    posts() {
-      return [
-        {
-          id: '1',
-          title: 'Название поста',
-          description: 'Текст',
-          claps: '0',
-          createdAt: '2019-09-29T00:00:00.000Z',
-          updateAt: '2019-09-29T00:00:00.000Z',
-          userId: '1',
-        },
-        {
-          id: '2',
-          title: 'Название поста',
-          description: 'Текст',
-          claps: '0',
-          createdAt: '2019-09-29T00:00:00.000Z',
-          updateAt: '2019-09-29T00:00:00.000Z',
-          userId: '1',
-        },
-      ];
+  data() {
+    return {
+      page: '1',
+    };
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.page = this.$route.query?.page || 1;
+        this.$store.dispatch('post/getPosts', this.page);
+      },
     },
   },
-  methods: {
-    linkPost({ id, userId }) {
-      return { name: 'article', params: { id, userId } };
+  computed: {
+    posts() {
+      return this.$store.state.post.posts;
+    },
+    count() {
+      return this.$store.state.post.count;
     },
   },
 };

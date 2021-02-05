@@ -1,6 +1,12 @@
 <template>
   <div id="topbar" class="shadow" v-resize="resize">
-    <div :class="{ 'has-text-white has-background-black': dark }" class="level px-3 mb-0">
+    <div
+      :class="{
+        'has-text-white has-background-black': dark,
+        'has-background-white': !dark,
+      }"
+      class="level is-mobile px-3 mb-0"
+    >
       <div class="level-left">
         <slot name="left"></slot>
       </div>
@@ -43,6 +49,7 @@ export default {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1;
 
     &>* {
       height: 3.25rem;
