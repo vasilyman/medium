@@ -1,5 +1,7 @@
 # medium
 
+http://medium.remonstro.ru
+
 ## Project setup
 ```
 npm install
